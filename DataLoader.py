@@ -10,17 +10,18 @@ import pandas as pd
 
 class DataLoader:
     @staticmethod
-    def load(path, separator=''):
+    def load(path, separator, header):
         ext = os.path.splitext(path)[1]
         try:
             match ext:
                 case ".xlsx":
-                    return pd.read_excel(path)
+                    return pd.read_excel(path, header=header)
                 case ".csv":
-                    return pd.read_csv(path, sep=separator)
+                    return pd.read_csv(path, sep=separator, header=header, engine='python')
                 case ".txt":
-                    return pd.read_csv(path, sep=separator)
+                    return pd.read_csv(path, sep=separator, header=header, engine='python')
                 case _:
                     return None
-        except:
+        except Exception as e:
+            print(e)
             return None
